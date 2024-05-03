@@ -146,8 +146,8 @@ data class BottomNavigationItem(
 
 val tabItems = listOf(
     UploadNavConstant.UploadPost.route,
-    UploadNavConstant.UploadClip.route,
     UploadNavConstant.UploadStory.route,
+    UploadNavConstant.UploadClip.route,
     UploadNavConstant.Livestream.route
 )
 
