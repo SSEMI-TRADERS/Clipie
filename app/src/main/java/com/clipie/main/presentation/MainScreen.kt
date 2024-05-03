@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -49,6 +50,8 @@ import com.clipie.main.presentation.navigation.MainNavConstant
 import com.clipie.main.presentation.navigation.MainNavHost
 import com.clipie.main.presentation.profile.ProfileScreenTopBar
 import com.clipie.main.presentation.upload.navigation.UploadNavConstant
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
@@ -180,12 +183,19 @@ fun MainBottomBar(navController: NavHostController) {
             )
         }
     }
-}
 
+}
 @Composable
 fun UploadBottomBar(navController: NavHostController) {
+    val coroutineScope = rememberCoroutineScope()
     var currentlyPicked by Delegates.observable(UploadNavConstant.UploadPost.route) { _, _, newValue ->
-        navController.navigate(newValue)
+
+
+        coroutineScope.launch {
+            navController.navigate(newValue)
+            delay(1500)
+        }
+
     }
 
     Picker(
