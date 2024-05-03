@@ -186,7 +186,6 @@ fun MainBottomBar(navController: NavHostController) {
 fun UploadBottomBar(navController: NavHostController) {
     var currentlyPicked by Delegates.observable(UploadNavConstant.UploadPost.route) { _, _, newValue ->
         navController.navigate(newValue)
-        Thread.sleep(1_000)  // wait for 1 second
     }
 
     Picker(
