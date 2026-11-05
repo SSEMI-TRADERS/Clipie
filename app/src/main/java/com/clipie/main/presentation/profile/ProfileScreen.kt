@@ -6,13 +6,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.clipie.app.domain.models.User
 import com.clipie.main.presentation.profile.components.*
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    viewModel: ProfileViewModel
+    viewModel: ProfileViewModel,
+    navController: NavController
 ) {
     val user = viewModel.user ?: User()
     Column(
