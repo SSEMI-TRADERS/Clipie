@@ -2,13 +2,17 @@ package com.clipie.main.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.clipie.main.presentation.clips.ClipsScreen
 import com.clipie.main.presentation.home.HomeScreen
+import com.clipie.main.presentation.profile.EditProfileScreen
 import com.clipie.main.presentation.profile.ProfileScreen
+import com.clipie.main.presentation.profile.ProfileViewModel
+import com.clipie.main.presentation.profile.navigation.ProfileNavConstant
 import com.clipie.main.presentation.search.SearchScreen
 import com.clipie.main.presentation.upload.navigation.UploadNavConstant
 import com.clipie.main.presentation.upload.screens.LivestreamScreen
@@ -49,8 +53,18 @@ fun MainNavHost(
         composable(route = MainNavConstant.Clips.route){
             ClipsScreen()
         }
-        composable(route = MainNavConstant.Profile.route) {
-            ProfileScreen()
+        navigation(startDestination = ProfileNavConstant.ProfileHome.route, route = MainNavConstant.Profile.route){
+            composable(route = ProfileNavConstant.ProfileHome.route){
+                val viewModel = hiltViewModel<ProfileViewModel>()
+                ProfileScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable(route = ProfileNavConstant.EditProfile.route){
+                EditProfileScreen(navController = navController)
+            }
         }
+
     }
 }

@@ -1,56 +1,81 @@
 package com.clipie.authentication.presentation
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State as ImmutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.clipie.app.domain.entities.State
-import com.clipie.authentication.domain.models.User
+import androidx.lifecycle.viewModelScope
+import com.clipie.util.Resource
+import com.clipie.app.domain.models.User
+import com.clipie.app.domain.repository.SessionRepository
 import com.clipie.authentication.domain.repository.AuthenticationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
-    private val repository: AuthenticationRepository
+    private val authenticationRepository: AuthenticationRepository,
+    private val sessionRepository: SessionRepository
 ) : ViewModel() {
 
-    private val _login: MutableState<State<Unit>> = mutableStateOf(State.Loading())
-    val login: ImmutableState<State<Unit>> = _login
+    var email by mutableStateOf("")
+        private set
 
-    private val _register: MutableState<State<Unit>> = mutableStateOf(State.Loading())
-    val register: ImmutableState<State<Unit>> = _register
+    var username by mutableStateOf("")
+        private set
 
-    private val _forgotPassword: MutableState<State<Unit>> = mutableStateOf(State.Loading())
-    val forgotPassword: ImmutableState<State<Unit>> = _forgotPassword
+    var password by mutableStateOf("")
+        private set
 
-    fun login(
-        email: String,
-        password: String
-    ) {
-        repository.login(email, password) { state ->
-            _login.value = state
+    var loginState by mutableStateOf<Resource<Unit>>(Resource.Idle)
+        private set
+
+    var registerState by mutableStateOf<Resource<Unit>>(Resource.Idle)
+        private set
+
+    var forgotPasswordState by mutableStateOf<Resource<Unit>>(Resource.Idle)
+        private set
+
+    fun login() {
+        viewModelScope.launch {
+            loginState = Resource.Loading
+            loginState = authenticationRepository.login(email, password)
         }
     }
 
-    fun register(
-        email: String,
-        password: String,
-        user: User
-    ) {
-        repository.register(email, password, user) { state ->
-            _register.value = state
+    fun register() {
+        viewModelScope.launch {
+            val user = User(email = email, username = username)
+            registerState = Resource.Loading
+            registerState = authenticationRepository.register(email, password, user)
         }
     }
 
-    fun forgotPassword(
-        email: String
-    ) {
-        repository.forgotPassword(email) { state ->
-            _forgotPassword.value = state
+    fun forgotPassword() {
+        viewModelScope.launch {
+            forgotPasswordState = Resource.Loading
+            forgotPasswordState = authenticationRepository.forgotPassword(email)
         }
     }
 
-    fun getSession() = repository.getSession()
+    fun getSession() = sessionRepository.getSession()
 
+    fun onEmailChange(email: String) {
+        this.email = email
+    }
+
+    fun onUsernameChange(username: String) {
+        this.username = username
+    }
+
+    fun onPasswordChange(password: String) {
+        this.password = password
+    }
+
+    fun clearData() {
+        this.email = ""
+        this.username = ""
+        this.password = ""
+    }
 }

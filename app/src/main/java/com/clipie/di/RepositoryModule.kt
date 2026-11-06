@@ -1,9 +1,13 @@
 package com.clipie.di
 
+import com.clipie.app.data.repository.SessionRepositoryImpl
+import com.clipie.app.domain.repository.SessionRepository
 import com.clipie.authentication.data.repository.AuthenticationRepositoryImpl
 import com.clipie.main.data.repository.MessagesRepositoryImpl
 import com.clipie.authentication.domain.repository.AuthenticationRepository
+import com.clipie.main.data.repository.ProfileRepositoryImpl
 import com.clipie.main.domain.repository.MessagesRepository
+import com.clipie.main.domain.repository.ProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +25,12 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindMessagesRepository(messagesRepositoryImpl: MessagesRepositoryImpl): MessagesRepository
+
+    @Binds
+    @Singleton
+    fun bindSessionRepository(sessionRepositoryImpl: SessionRepositoryImpl): SessionRepository
+
+    @Binds
+    @Singleton
+    fun bindProfileRepository(profileRepositoryImpl: ProfileRepositoryImpl): ProfileRepository
 }
