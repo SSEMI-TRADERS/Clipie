@@ -183,20 +183,12 @@ fun MainBottomBar(navController: NavHostController) {
             )
         }
     }
-
 }
+
 @Composable
 fun UploadBottomBar(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
-    var currentlyPicked by Delegates.observable(UploadNavConstant.UploadPost.route) { _, _, newValue ->
-
-
-        coroutineScope.launch {
-            navController.navigate(newValue)
-            delay(1500)
-        }
-
-    }
+    var currentlyPicked: String = "story"
 
     Picker(
         modifier = Modifier
@@ -208,7 +200,7 @@ fun UploadBottomBar(navController: NavHostController) {
         },
         showAmount = 3
     )
-
+    navController.navigate(route = currentlyPicked)
 
 }
 
@@ -316,7 +308,6 @@ fun <T> Picker(
             }
         }
     }
-
 }
 
 data class PickerStyle(

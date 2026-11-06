@@ -34,7 +34,7 @@ fun LivestreamScreen(navController: NavController) {
 
             Text(text = "<Active follower count>")
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { /*TODO why didnt i write something down ehre before i forgot*/ }) {
 
                 Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
             }
