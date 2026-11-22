@@ -135,11 +135,11 @@ fun ProfileScreenTopBar() {
 }
 
 fun notificationFormat(notificationCount: Int): String {
-    val outPut: String = when (notificationCount) {
+    val output: String = when (notificationCount) {
         0 -> ""
         in 1..99 -> "  $notificationCount  "
         in 99..Int.MAX_VALUE -> "  99 + "
         else -> " Unknown "
     }
-    return outPut
+    return output
 }

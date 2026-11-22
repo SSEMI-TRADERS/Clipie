@@ -48,10 +48,10 @@ import com.clipie.main.presentation.home.components.HomeScreenTopBar
 import com.clipie.main.presentation.search.SearchScreenTopBar
 import com.clipie.main.presentation.navigation.MainNavConstant
 import com.clipie.main.presentation.navigation.MainNavHost
-import com.clipie.main.presentation.profile.components.ProfileScreenTopBar
+import com.clipie.main.presentation.profile.components.ProfileScreenTopBar // topbar profile
+import com.clipie.main.presentation.profile.navigation.ProfileNavConstant
 import com.clipie.main.presentation.upload.components.UploadClipScreenTopBar
 import com.clipie.main.presentation.upload.components.UploadPostScreenTopBar
-import com.clipie.main.presentation.profile.ProfileScreenTopBar
 import com.clipie.main.presentation.upload.navigation.UploadNavConstant
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -101,7 +101,7 @@ fun MainScreen(
                     HomeScreenTopBar()
                 }
 
-                MainNavConstant.Profile.route -> {
+                ProfileNavConstant.ProfileHome.route -> {
                     ProfileScreenTopBar()
                 }
 
